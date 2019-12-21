@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
+import Modal from 'react-modal';
 import Amount from 'arui-feather/amount';
 import Button from 'arui-feather/button';
 import OkIcon from 'arui-feather/icon/ui/ok';
@@ -16,6 +17,17 @@ const STATUSES = {
     REJECT: 'reject'
 };
 
+const customStyles = {
+    content : {
+        top                   : '50%',
+        left                  : '50%',
+        right                 : 'auto',
+        bottom                : 'auto',
+        marginRight           : '-50%',
+        transform             : 'translate(-50%, -50%)'
+    }
+};
+
 class App extends Component {
     state = {
         contract: new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS),
@@ -25,7 +37,8 @@ class App extends Component {
         buyer: undefined,
         buyerStatus: undefined,
         balance: 0,
-        isBalanceLoading: false
+        isBalanceLoading: false,
+        isBalanceModalShow: false
     };
 
     async componentDidMount() {
@@ -64,8 +77,16 @@ class App extends Component {
 
     };
 
+    openBalanceModal = () => {
+        this.setState({ isBalanceModalShow: true });
+    };
+
+    closeBalanceModal = () => {
+        this.setState({ isBalanceModalShow: false });
+    };
+
     render() {
-        const { owner, seller, buyer, balance, isBalanceLoading } = this.state;
+        const { owner, seller, buyer, balance, isBalanceLoading, isBalanceModalShow } = this.state;
 
         const ethBalance = balance && window.web3.fromWei(balance, 'ether');
 
@@ -138,13 +159,28 @@ class App extends Component {
                                 view='extra'
                                 width='available'
                                 disabled={ isBalanceLoading }
-                                onClick={ this.handleDeposit }
+                                onClick={ this.openBalanceModal }
                             >
                                 { isBalanceLoading ? 'Идет оплата...' : 'Внести деньги' }
                             </Button>
                         </div>
                     </div>
                 </div>
+                <Modal
+                    isOpen={ isBalanceModalShow }
+                    style={customStyles}
+                    onRequestClose={ this.closeBalanceModal }
+                >
+                    <Button
+                        size='m'
+                        view='extra'
+                        width='available'
+                        disabled={ isBalanceLoading }
+                        onClick={ this.handleDeposit }
+                    >
+                        { isBalanceLoading ? 'Идет оплата...' : 'Внести деньги' }
+                    </Button>
+                </Modal>
             </div>
         );
     }
