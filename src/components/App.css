@@ -3,11 +3,18 @@
   font-size: 24px;
 }
 
-
+.app__error {
+  text-align: center;
+}
 
 .app__info {
   display: flex;
   justify-content: space-between;
+}
+
+.app__info__table__line--disabled .app__info__table__key,
+.app__info__table__line--disabled .app__info__table__value {
+  opacity: 0.5;
 }
 
 .app__info__table td {
@@ -18,6 +25,15 @@
 }
 .app__info__table__actions .icon-button {
   margin-right: 5px;
+}
+
+.icon__approve--pressed {
+  background-color: rgba(47, 194, 110, 1);
+  border-radius: 15px;
+}
+.icon__reject--pressed {
+  background-color: rgba(240, 50, 38, .85);
+  border-radius: 15px;
 }
 
 .app__info__balance  {
@@ -34,6 +50,10 @@
 .app__info__balance__amount .amount .label {
   padding-left: 10px;
   font-size: 1.05em;
+}
+
+.app__modal__input {
+  padding-bottom: 30px;
 }
 
 .app__info__balance__button {

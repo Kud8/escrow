@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e5ff5170-43c2-4ca4-bac3-8278196d4620" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/the_dev_dog.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
@@ -34,6 +34,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/assets" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -45,10 +46,13 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/assets" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/components" />
       <recent name="$PROJECT_DIR$/src/contracts" />
@@ -98,6 +102,10 @@
       <workItem from="1576763413166" duration="157000" />
       <workItem from="1576779810047" duration="3911000" />
       <workItem from="1576871698920" duration="2908000" />
+      <workItem from="1580213654156" duration="158000" />
+      <workItem from="1580213837141" duration="102000" />
+      <workItem from="1580213957455" duration="36000" />
+      <workItem from="1580214004347" duration="5668000" />
     </task>
     <servers />
   </component>
@@ -117,29 +125,33 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="588" y="374" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1680.1050@0.0.1680.1050" timestamp="1576701419725" />
-    <state width="1638" height="268" key="GridCell.Tab.0.bottom" timestamp="1576924124378">
+    <state width="1638" height="275" key="GridCell.Tab.0.bottom" timestamp="1580219282515">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="268" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1576924124378" />
+    <state width="1638" height="275" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1580219282515" />
     <state width="1638" height="268" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1576322430211" />
-    <state width="1638" height="268" key="GridCell.Tab.0.center" timestamp="1576924124377">
+    <state width="1638" height="275" key="GridCell.Tab.0.center" timestamp="1580219282514">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="268" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1576924124377" />
+    <state width="1638" height="275" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1580219282514" />
     <state width="1638" height="268" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1576322430210" />
-    <state width="1638" height="268" key="GridCell.Tab.0.left" timestamp="1576924124377">
+    <state width="1638" height="275" key="GridCell.Tab.0.left" timestamp="1580219282514">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="268" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1576924124377" />
+    <state width="1638" height="275" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1580219282514" />
     <state width="1638" height="268" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1576322430210" />
-    <state width="1638" height="268" key="GridCell.Tab.0.right" timestamp="1576924124377">
+    <state width="1638" height="275" key="GridCell.Tab.0.right" timestamp="1580219282515">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="268" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1576924124377" />
+    <state width="1638" height="275" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1580219282515" />
     <state width="1638" height="268" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576322430211" />
-    <state x="349" y="173" key="SettingsEditor" timestamp="1576704313299">
+    <state x="349" y="173" key="SettingsEditor" timestamp="1580213992488">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="349" y="173" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1576704313299" />
+    <state x="349" y="173" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1580213992488" />
+    <state x="610" y="161" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1580211751331">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="610" y="161" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1580211751331" />
   </component>
 </project>
