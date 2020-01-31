@@ -12,9 +12,22 @@
   justify-content: space-between;
 }
 
+.app__createTime {
+  font-size: 18px;
+  padding-bottom: 10px;
+}
+
+.app__info__table__line .app__info__table__key,
+.app__info__table__line .app__info__table__value {
+  font-size: 24px;
+  opacity: 1;
+  transition: 500ms ease-out;
+}
+
 .app__info__table__line--disabled .app__info__table__key,
 .app__info__table__line--disabled .app__info__table__value {
-  opacity: 0.5;
+  opacity: 0.4;
+  font-size: 22px;
 }
 
 .app__info__table td {
@@ -76,6 +89,6 @@
 
 @media screen and (min-width: 1800px) {
   .app {
-    padding: 40px 180px;
+    padding: 60px 180px;
   }
 }

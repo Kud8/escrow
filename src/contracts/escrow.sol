@@ -7,7 +7,7 @@ contract Escrow {
     bool public buyerOk = false;
     bool public sellerOk = false;
     uint public balance = 0;
-    uint private start;
+    uint public start;
 
     modifier onlyOwner() {
         require(msg.sender == owner);

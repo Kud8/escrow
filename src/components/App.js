@@ -9,7 +9,9 @@ import IconButton from 'arui-feather/icon-button';
 import Input from 'arui-feather/input';
 import cn from 'classname';
 
-import { CONTRACT_ADDRESS, CONTRACT_ABI, BALANCE_MINORITY } from '../constants/app';
+import { CONTRACT_ADDRESS, BALANCE_MINORITY } from '../constants/app';
+import CONTRACT_ABI from '../constants/abi';
+
 import './App.css';
 
 const web3 = new Web3(Web3.givenProvider);
@@ -36,24 +38,27 @@ const customStyles = {
 
 class App extends Component {
     state = {
+        balance: 0,
+        buyer: undefined,
+        buyerStatus: undefined,
         contract: new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS),
+        createTime: undefined,
         currentAccount: undefined,
+        error: undefined,
+        inputMoney: 0,
+        isBalanceLoading: false,
+        isBalanceModalShow: false,
         owner: undefined,
         seller: undefined,
         sellerStatus: undefined,
-        buyer: undefined,
-        buyerStatus: undefined,
-        balance: 0,
-        isBalanceLoading: false,
-        isBalanceModalShow: false,
-        inputMoney: 0,
-        error: undefined
     };
 
     async componentDidMount() {
         const { contract } = this.state;
 
         window.ethereum.enable();
+
+        Modal.setAppElement('#app');
 
         try {
             const owner = (await contract.methods.owner().call()).toLowerCase();
@@ -62,6 +67,7 @@ class App extends Component {
             const buyerStatus = (await contract.methods.buyerOk().call()) ? STATUSES.ACCEPT : undefined;
             const sellerStatus = (await contract.methods.sellerOk().call()) ? STATUSES.ACCEPT : undefined;
             const balance = await contract.methods.balance().call();
+            const createTime = await contract.methods.start().call();
             const currentAccount = web3.eth.accounts.currentProvider.selectedAddress.toLowerCase();
 
             setInterval(() => {
@@ -72,7 +78,10 @@ class App extends Component {
                 }
             }, 500);
 
-            this.setState({ owner, seller, sellerStatus, buyer, buyerStatus, balance, currentAccount }, () => console.log(this.state));
+            this.setState(
+                { owner, seller, sellerStatus, buyer, buyerStatus, balance, currentAccount, createTime },
+                () => console.log(this.state)
+            );
         } catch (error) {
             this.setState({ error })
         }
@@ -84,17 +93,30 @@ class App extends Component {
 
         this.setState({ isBalanceLoading: true });
 
-        await contract.methods.deposit().send({
-            from: currentAccount,
-            value: web3.utils.toWei(inputMoney, 'ether')
-        });
-        const balance = await contract.methods.balance().call();
+        try {
+            await contract.methods.deposit().send({
+                from: currentAccount,
+                value: web3.utils.toWei(inputMoney, 'ether')
+            });
+            const balance = await contract.methods.balance().call();
 
-        this.setState({ isBalanceLoading: false, isBalanceModalShow: false, balance });
+            this.setState({ isBalanceLoading: false, isBalanceModalShow: false, balance });
+        } catch (e) {
+            this.setState({ isBalanceLoading: false, isBalanceModalShow: false });
+        }
+    };
+
+    checkSuccessStatus = () => {
+        const { seller, sellerStatus, buyerStatus } = this.state;
+
+        if (buyerStatus === STATUSES.ACCEPT && sellerStatus === STATUSES.ACCEPT){
+            alert(`Все средства были переведены продавцу ${seller}.`);
+            window.location.reload();
+        }
     };
 
     handleChangeStatus = async (address, isAccepted) => {
-        const { contract, seller, sellerStatus, buyer, buyerStatus, currentAccount } = this.state;
+        const { contract, seller, buyer, currentAccount } = this.state;
 
         if (currentAccount !== address) {
             return;
@@ -102,18 +124,16 @@ class App extends Component {
 
         if (isAccepted) {
             await contract.methods.accept().send({ from: currentAccount });
-            if (buyerStatus === STATUSES.ACCEPT && sellerStatus === STATUSES.ACCEPT){
-                alert(`Все средства были переведены продавцу ${seller}`);
-            }
         } else {
-            await contract.methods.reject().call();
-            alert(`Все средства были возращены покупателю ${buyer}`);
+            await contract.methods.cancel().send({ from: currentAccount });
+            alert(`Все средства были возращены покупателю ${buyer}.`);
+            window.location.reload();
         }
 
         if (address === buyer) {
-            this.setState({ buyerStatus: isAccepted ? STATUSES.ACCEPT : STATUSES.REJECT });
+            this.setState({ buyerStatus: isAccepted ? STATUSES.ACCEPT : STATUSES.REJECT }, this.checkSuccessStatus);
         } else if (address === seller) {
-            this.setState({ sellerStatus: isAccepted ? STATUSES.ACCEPT : STATUSES.REJECT });
+            this.setState({ sellerStatus: isAccepted ? STATUSES.ACCEPT : STATUSES.REJECT }, this.checkSuccessStatus);
         }
     };
 
@@ -128,14 +148,14 @@ class App extends Component {
     render() {
         const {
             error, owner, seller, buyer, balance, isBalanceLoading, isBalanceModalShow,
-            buyerStatus, sellerStatus, currentAccount
+            buyerStatus, sellerStatus, currentAccount, createTime, inputMoney
         } = this.state;
 
         if (error) {
             return (
                 <div className='app app__error'>
                     <h1>
-                        Ошибка. Контракт не действителен.<br/>
+                        Контракт не действителен.<br/>
                         Создайте новый и обновите приложение.
                     </h1>
                     <img src='https://cdn.oubly.net/img/the_dev_dog.gif' />
@@ -146,7 +166,14 @@ class App extends Component {
         const ethBalance = balance && window.web3.fromWei(balance, 'ether');
 
         return (
-            <div className='app'>
+            <div className='app' id='app'>
+                {
+                    createTime && (
+                        <div className='app__createTime'>
+                            {`Время создания контракта: ${new Date(createTime * 1000).toLocaleString()}`}
+                        </div>
+                    )
+                }
                 <div className='app__info'>
                     <div className='app__info__table'>
                         <table>
@@ -158,7 +185,12 @@ class App extends Component {
                                         <div />
                                     </td>
                                 </tr>
-                                <tr className={ cn({'app__info__table__line--disabled': currentAccount !== buyer}) } >
+                                <tr
+                                    className={cn(
+                                        'app__info__table__line',
+                                        {'app__info__table__line--disabled': currentAccount !== buyer}
+                                    ) }
+                                >
                                     <td className='app__info__table__key'>Покупатель:</td>
                                     <td className='app__info__table__value'>{ buyer }</td>
                                     <td className='app__info__table__actions'>
@@ -188,7 +220,12 @@ class App extends Component {
                                         }
                                     </td>
                                 </tr>
-                                <tr className={ cn({'app__info__table__line--disabled': currentAccount !== seller}) }>
+                                <tr
+                                    className={cn(
+                                        'app__info__table__line',
+                                        {'app__info__table__line--disabled': currentAccount !== seller}
+                                    ) }
+                                >
                                     <td className='app__info__table__key'>Продавец:</td>
                                     <td className='app__info__table__value'>{ seller }</td>
                                     <td className='app__info__table__actions'>
@@ -266,7 +303,7 @@ class App extends Component {
                             size='m'
                             view='extra'
                             width='available'
-                            disabled={ isBalanceLoading }
+                            disabled={ isBalanceLoading || !inputMoney }
                             onClick={ this.handleDeposit }
                         >
                             { isBalanceLoading ? 'Идет оплата...' : 'Внести деньги' }
