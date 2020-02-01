@@ -1,20 +1,25 @@
 .app {
-  padding: 20px;
   font-size: 24px;
+  height: 100vh;
+  background: #F3F4F5;
+  display: flex;
+  justify-content: space-between;
 }
 
 .app__error {
   text-align: center;
+  display: block !important;
 }
 
 .app__info {
-  display: flex;
-  justify-content: space-between;
+  width: fit-content;
 }
 
 .app__createTime {
   font-size: 18px;
   padding-bottom: 10px;
+  color: #F3F4F5;
+  text-align: center;
 }
 
 .app__info__table__line .app__info__table__key,
@@ -49,11 +54,36 @@
   border-radius: 15px;
 }
 
-.app__info__balance  {
-  width: 300px;
+.app__account {
+  width: 30%;
+  height: 100vh;
+  background: #6D7986;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  color: #F3F4F5;
+  box-shadow: -5px 0 10px #6D7986;
+}
+.app__account__image {
+  padding-top: 30px;
+  padding-bottom: 10px;
+  width: 150px;
+  height: 150px;
+}
+.app__account__currentAccount {
+  font-size: 18px;
+  text-align: center;
+  padding-bottom: 10px;
+}
+.app__account__currentAccount--address,
+.app__createTime--address {
+  font-weight: bold;
+}
+.app__info__balance {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-size: 1.2em;
 }
 .app__info__balance__amount {
@@ -73,22 +103,26 @@
   width: 220px;
 }
 
+.amount_theme_alfa-on-color .label {
+  color: rgba(255, 255, 255, 1) !important;
+}
+
 @media screen and (max-width: 1200px) {
-  .app {
+  .app__info {
     padding: 40px 40px;
     font-size: 18px;
   }
 }
 
 @media screen and (min-width: 1200px) and (max-width: 1800px) {
-  .app {
-    padding: 40px 100px;
+  .app__info {
+    padding: 40px 0 40px 100px;
     font-size: 22px;
   }
 }
 
 @media screen and (min-width: 1800px) {
-  .app {
-    padding: 60px 180px;
+  .app__info {
+    padding: 100px 0 60px 180px;
   }
 }

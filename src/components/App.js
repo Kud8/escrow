@@ -167,13 +167,6 @@ class App extends Component {
 
         return (
             <div className='app' id='app'>
-                {
-                    createTime && (
-                        <div className='app__createTime'>
-                            {`Время создания контракта: ${new Date(createTime * 1000).toLocaleString()}`}
-                        </div>
-                    )
-                }
                 <div className='app__info'>
                     <div className='app__info__table'>
                         <table>
@@ -258,12 +251,32 @@ class App extends Component {
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div className='app__account'>
+                    <img className='app__account__image' src='https://pngimage.net/wp-content/uploads/2018/05/default-avatar-png-9.png' />
+                    {
+                        currentAccount && (
+                            <div className='app__account__currentAccount'>
+                                <span>Текущий аккаунт: </span>
+                                <span className='app__account__currentAccount--address'>{currentAccount}</span>
+                            </div>
+                        )
+                    }
+                    {
+                        createTime && (
+                            <div className='app__createTime'>
+                                <span>Время создания контракта: <br/></span>
+                                <span className='app__createTime--address'>{new Date(createTime * 1000).toLocaleString()}</span>
+                            </div>
+                        )
+                    }
                     <div className='app__info__balance'>
                         <div className='app__info__balance__amount'>
                             <div>Баланс: </div>
                             <Amount
                                 size='xl'
                                 bold={ true }
+                                theme='alfa-on-color'
                                 amount={{
                                     value: ethBalance * BALANCE_MINORITY || 0,
                                     currency: {
@@ -286,6 +299,7 @@ class App extends Component {
                         </div>
                     </div>
                 </div>
+
                 <Modal
                     isOpen={ isBalanceModalShow }
                     style={ customStyles }
